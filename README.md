@@ -6,6 +6,12 @@ Go wallet support basic account/ transaction functions<br>
 Include email notification for lower balance<br>
 Role-based management, include Admin, customer service, users
 
+# Service Breakdown
+User Service: JWT Auth + User info + redis
+Wallet Service: Account/balances
+Transaction Service: tansactions
+Notification Service: Email Notification
+
 # Technical Stack
 Frontend: React & Ant Design for frontend to build a user-friendly frontend<br>
 Backend: Go & Gin for a microservice based backend system<br>
