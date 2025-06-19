@@ -7,10 +7,10 @@ Include email notification for lower balance<br>
 Role-based management, include Admin, customer service, users
 
 # Service Breakdown
-User Service: JWT Auth + User info + redis
-Wallet Service: Account/balances
-Transaction Service: tansactions
-Notification Service: Email Notification
+User Service: JWT Auth + User info + redis<br>
+Wallet Service: Account/balances<br>
+Transaction Service: tansactions<br>
+Notification Service: Email Notification<br>
 
 # Technical Stack
 Frontend: React & Ant Design for frontend to build a user-friendly frontend<br>
