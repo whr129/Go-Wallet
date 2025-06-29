@@ -14,11 +14,12 @@ Notification Service: Email Notification<br>
 
 # Technical Stack
 Frontend: React & Ant Design for frontend to build a user-friendly frontend<br>
+MicroService: Using gRPC to communicate between distributed services<br>
 Backend: Go & Gin for a microservice based backend system<br>
 Database: PostgreSQL for data storage<br>
 Cache: Using Redis to store cache/ user login activity<br>
 Message Queue: RabbitMQ/Kafka (pending)<br>
-Other: gRPC, docker, Kubernetes, AWS free tier<br>
+Deployment: docker, Kubernetes, AWS free tier<br>
 
 # Future
 Add MangoDB<br>
