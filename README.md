@@ -24,3 +24,8 @@ Deployment: docker, Kubernetes, AWS free tier<br>
 # Future
 Add MangoDB<br>
 Add real-world crypto transaction<br>
+
+# Reference
+Go & Gin & gRPC & Docker & Deployment: https://github.com/techschool/simplebank<br>
+Microservices & RabbitMQ: https://github.com/SmoothWay/udemy-go-microservices<br>
+Architecture & Implementation: https://github.com/JordanMarcelino/learn-go-microservices/<br>
