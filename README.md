@@ -39,9 +39,9 @@ Email Notification:
 - CI: Github workflow<br>
 
 ## RoadMap & Plan:
-- Learning through Go + Gin + gRPC + RabbitMQ + Microservices
-- Design Project by adapting good design architecture of different github repo
-- set up project layout
+- Learning through Go + Gin + gRPC + RabbitMQ + Microservices(✅)
+- Design Project by adapting good design architecture of different github repo(✅)
+- set up project layout(✅)
 - design database table
 - set up makefile/database/mq/redis/gin/gateway/docker
 - write auth service and integrate middleware of auth
