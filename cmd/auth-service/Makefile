@@ -24,10 +24,10 @@ migratedown1:
 new_migration:
 	migrate create -ext sql -dir db/migration -seq $(name)
 
-server:
-	go run main.go
-
 sqlc:
 	sqlc generate
+
+server:
+	go run server/main.go
 
 .PHONY: migrateup migratedown migrateup1 migratedown1 new_migration sqlc server
