@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"errors"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -42,10 +44,10 @@ func main() {
 		log.Fatal().Err(err).Msg("cannot connect to db")
 	}
 
-	runDBMigration(config.MigrationURL, config.DBSource)
-	runGinServer(config, db.NewStore(connPool))
-
 	waitGroup, ctx := errgroup.WithContext(ctx)
+
+	runDBMigration(config.MigrationURL, config.DBSource)
+	runGinServer(config, db.NewStore(connPool), waitGroup, ctx)
 
 	err = waitGroup.Wait()
 	if err != nil {
@@ -66,14 +68,45 @@ func runDBMigration(migrationURL string, dbSource string) {
 	log.Info().Msg("db migrated successfully")
 }
 
-func runGinServer(config util.Config, store db.Store) {
+func runGinServer(
+	config util.Config,
+	store db.Store,
+	waitGroup *errgroup.Group,
+	ctx context.Context) {
 	server, err := api.NewServer(config, store)
 	if err != nil {
 		log.Fatal().Err(err).Msg("cannot create server")
 	}
 
-	err = server.Start(config.HTTPServerAddress)
-	if err != nil {
-		log.Fatal().Err(err).Msg("cannot start server")
+	httpServer := &http.Server{
+		Addr:    config.HTTPServerAddress,
+		Handler: server.Router,
 	}
+
+	waitGroup.Go(func() error {
+		log.Info().Msgf("start HTTP gateway server at %s", httpServer.Addr)
+		err = httpServer.ListenAndServe()
+		if err != nil {
+			if errors.Is(err, http.ErrServerClosed) {
+				return nil
+			}
+			log.Error().Err(err).Msg("HTTP gateway server failed to serve")
+			return err
+		}
+		return nil
+	})
+
+	waitGroup.Go(func() error {
+		<-ctx.Done()
+		log.Info().Msg("graceful shutdown HTTP gateway server")
+
+		err := httpServer.Shutdown(context.Background())
+		if err != nil {
+			log.Error().Err(err).Msg("failed to shutdown HTTP gateway server")
+			return err
+		}
+
+		log.Info().Msg("HTTP gateway server is stopped")
+		return nil
+	})
 }
