@@ -33,4 +33,4 @@ sqlc:
 server:
 	go run server/main.go
 
-.PHONY: network postgres migrateup migratedown migrateup1 migratedown1 new_migration sqlc server
+.PHONY: network createdb dropdb postgres migrateup migratedown migrateup1 migratedown1 new_migration sqlc server
