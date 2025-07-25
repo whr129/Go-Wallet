@@ -1,7 +1,6 @@
 CREATE TABLE "accounts" (
   "id" bigint PRIMARY KEY,
   "user_id" bigint,
-  "email" varchar NOT NULL,
   "balance" bigint NOT NULL,
   "currency" varchar NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now()),

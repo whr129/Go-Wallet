@@ -6,11 +6,9 @@ import (
 	"github.com/google/uuid"
 )
 
-type CreateUserRequest struct {
-	UserName string `json:"username" binding:"required,alphanum"`
-	Password string `json:"password" binding:"required,min=6"`
-	Email    string `json:"email" binding:"required,email"`
-	Role     string `json:"role"`
+type CreateAccountRequest struct {
+	UserID   int64  `json:"user_id" binding:"required"`
+	Currency string `json:"currency" binding:"required,currency"`
 }
 
 type UserResponse struct {

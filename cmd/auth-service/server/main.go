@@ -16,7 +16,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/whr129/go-wallet/cmd/auth-service/api"
 	db "github.com/whr129/go-wallet/cmd/auth-service/db/sqlc"
-	util "github.com/whr129/go-wallet/cmd/auth-service/util"
+	util "github.com/whr129/go-wallet/pkg/util"
 	"golang.org/x/sync/errgroup"
 )
 

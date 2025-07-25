@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	db "github.com/whr129/go-wallet/cmd/auth-service/db/sqlc"
-	"github.com/whr129/go-wallet/cmd/auth-service/token"
-	"github.com/whr129/go-wallet/cmd/auth-service/util"
+	token "github.com/whr129/go-wallet/pkg/token"
+	util "github.com/whr129/go-wallet/pkg/util"
 )
 
 // Server serves HTTP requests for our banking service.

@@ -1,10 +1,11 @@
 -- name: CreateAccount :one
 INSERT INTO accounts (
-  owner,
+  id,
+  user_id,
   balance,
   currency
 ) VALUES (
-  $1, $2, $3
+  $1, $2, $3, $4
 ) RETURNING *;
 
 -- name: GetAccount :one
@@ -18,7 +19,7 @@ FOR NO KEY UPDATE;
 
 -- name: ListAccounts :many
 SELECT * FROM accounts
-WHERE owner = $1
+WHERE user_id = $1
 ORDER BY id
 LIMIT $2
 OFFSET $3;
