@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	db "github.com/whr129/go-wallet/cmd/auth-service/db/sqlc"
 	"github.com/whr129/go-wallet/cmd/auth-service/dto"
-	"github.com/whr129/go-wallet/pkg/token"
-	"github.com/whr129/go-wallet/pkg/util"
+	token "github.com/whr129/go-wallet/pkg/token"
+	util "github.com/whr129/go-wallet/pkg/util"
 )
 
 func newUserResponse(user db.User) dto.UserResponse {
