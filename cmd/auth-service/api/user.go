@@ -87,7 +87,9 @@ func (server *Server) loginUser(ctx *gin.Context) {
 	}
 
 	accessToken, accessPayload, err := server.tokenMaker.CreateToken(
+		user.ID,
 		user.UserName,
+		user.Email,
 		user.Role,
 		server.config.AccessTokenDuration,
 		token.TokenTypeAccessToken,
