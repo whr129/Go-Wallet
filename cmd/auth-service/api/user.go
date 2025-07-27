@@ -100,7 +100,9 @@ func (server *Server) loginUser(ctx *gin.Context) {
 	}
 
 	refreshToken, refreshPayload, err := server.tokenMaker.CreateToken(
+		user.ID,
 		user.UserName,
+		user.Email,
 		user.Role,
 		server.config.RefreshTokenDuration,
 		token.TokenTypeRefreshToken,
@@ -110,22 +112,31 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		return
 	}
 
-	// session, err := server.store.CreateSession(ctx, db.CreateSessionParams{
-	// 	ID:           refreshPayload.ID,
-	// 	Username:     user.Username,
-	// 	RefreshToken: refreshToken,
-	// 	UserAgent:    ctx.Request.UserAgent(),
-	// 	ClientIp:     ctx.ClientIP(),
-	// 	IsBlocked:    false,
-	// 	ExpiresAt:    refreshPayload.ExpiredAt,
-	// })
-	// if err != nil {
-	// 	ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-	// 	return
-	// }
+	id, err := util.GenerateID()
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	session, err := server.store.CreateSession(ctx, db.CreateSessionParams{
+		ID:           id,
+		UserID:       refreshPayload.UserID,
+		UserName:     user.UserName,
+		Email:        user.Email,
+		RefreshToken: refreshToken,
+		UserAgent:    ctx.Request.UserAgent(),
+		ClientIp:     ctx.ClientIP(),
+		IsBlocked:    false,
+		ExpiresAt:    refreshPayload.ExpiredAt,
+	})
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
 
 	rsp := dto.LoginUserResponse{
-		// SessionID:             session.ID,
+		SessionID:             session.ID,
 		AccessToken:           accessToken,
 		AccessTokenExpiresAt:  accessPayload.ExpiredAt,
 		RefreshToken:          refreshToken,

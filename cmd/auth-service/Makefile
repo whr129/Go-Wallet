@@ -33,4 +33,10 @@ sqlc:
 server:
 	go run server/main.go
 
-.PHONY: network createdb dropdb postgres migrateup migratedown migrateup1 migratedown1 new_migration sqlc server
+dockerbuild:
+	docker build -t auth-service:latest .
+
+dockerrun:
+	docker run --name auth-service --network go-wallet-network -p 8080:8080 -d auth-service:latest
+
+.PHONY: network createdb dropdb postgres migrateup migratedown migrateup1 migratedown1 new_migration sqlc server dockerbuild
