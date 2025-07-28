@@ -15,6 +15,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/whr129/go-wallet/cmd/auth-service/api"
+	rds "github.com/whr129/go-wallet/cmd/auth-service/db"
 	db "github.com/whr129/go-wallet/cmd/auth-service/db/sqlc"
 	util "github.com/whr129/go-wallet/pkg/util"
 	"golang.org/x/sync/errgroup"
@@ -44,10 +45,15 @@ func main() {
 		log.Fatal().Err(err).Msg("cannot connect to db")
 	}
 
+	redisClient, err := rds.GetRedisClient(config.RedisAddress, config.RedisPassword, config.RedisDB)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Error connecting to redis:")
+	}
+
 	waitGroup, ctx := errgroup.WithContext(ctx)
 
 	runDBMigration(config.MigrationURL, config.DBSource)
-	runGinServer(config, db.NewStore(connPool), waitGroup, ctx)
+	runGinServer(config, db.NewStore(connPool), redisClient, waitGroup, ctx)
 
 	err = waitGroup.Wait()
 	if err != nil {
@@ -71,9 +77,10 @@ func runDBMigration(migrationURL string, dbSource string) {
 func runGinServer(
 	config util.Config,
 	store db.Store,
+	redisClient *rds.RedisClient,
 	waitGroup *errgroup.Group,
 	ctx context.Context) {
-	server, err := api.NewServer(config, store)
+	server, err := api.NewServer(config, store, redisClient.Client)
 	if err != nil {
 		log.Fatal().Err(err).Msg("cannot create server")
 	}

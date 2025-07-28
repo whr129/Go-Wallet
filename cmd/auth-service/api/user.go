@@ -135,6 +135,20 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		return
 	}
 
+	// Store the refresh token in Redis
+	server.redisClient.Set(ctx, refreshToken, session.ID, server.config.RefreshTokenDuration).Err()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	// Store the access token in Redis
+	err = server.redisClient.Set(ctx, accessToken, session.ID, server.config.AccessTokenDuration).Err()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
 	rsp := dto.LoginUserResponse{
 		SessionID:             session.ID,
 		AccessToken:           accessToken,

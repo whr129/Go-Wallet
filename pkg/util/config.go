@@ -17,12 +17,15 @@ type Config struct {
 	TokenSymmetricKey    string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
 	AccessTokenDuration  time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
 	RefreshTokenDuration time.Duration `mapstructure:"REFRESH_TOKEN_DURATION"`
+	RedisAddress         string        `mapstructure:"REDIS_ADDRESS"`
+	RedisPassword        string        `mapstructure:"REDIS_PASSWORD"`
+	RedisDB              int           `mapstructure:"REDIS_DB"`
 }
 
 // LoadConfig reads configuration from file or environment variables.
 func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath(path)
-	viper.SetConfigName("auth")
+	viper.SetConfigName("app")
 	viper.SetConfigType("env")
 
 	viper.AutomaticEnv()

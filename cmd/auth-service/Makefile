@@ -39,4 +39,7 @@ dockerbuild:
 dockerrun:
 	docker run --name auth-service --network go-wallet-network -p 8080:8080 -d auth-service:latest
 
+redis:
+	docker run --name redis --network go-wallet-network -p 6379:6379 -d redis:latest
+
 .PHONY: network createdb dropdb postgres migrateup migratedown migrateup1 migratedown1 new_migration sqlc server dockerbuild
