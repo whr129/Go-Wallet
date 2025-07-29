@@ -7,8 +7,9 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.7.5
+	github.com/redis/go-redis/v9 v9.11.0
 	github.com/rs/zerolog v1.34.0
-	github.com/whr129/go-wallet/pkg v0.0.0-20250725022844-168470600d3b
+	github.com/whr129/go-wallet/pkg v0.0.0-20250728014847-c26bf38599b2
 	golang.org/x/sync v0.16.0
 )
 
@@ -42,7 +43,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
-	github.com/redis/go-redis/v9 v9.11.0 // indirect
 	github.com/sagikazarmark/locafero v0.7.0 // indirect
 	github.com/sony/sonyflake/v2 v2.2.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect

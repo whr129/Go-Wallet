@@ -2,7 +2,7 @@
 FROM golang:1.24-alpine AS builder
 
 WORKDIR /app
-COPY go.mod go.sum auth.env ./
+COPY go.mod go.sum app.env ./
 RUN go mod download
 
 COPY . .
@@ -13,7 +13,7 @@ FROM alpine:latest
 
 WORKDIR /app
 COPY --from=builder /app/auth-service .
-COPY --from=builder /app/auth.env .
+COPY --from=builder /app/app.env .
 COPY --from=builder /app/db/migration ./db/migration
 
 EXPOSE 8080

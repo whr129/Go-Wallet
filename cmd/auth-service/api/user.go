@@ -1,10 +1,14 @@
 package api
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 	db "github.com/whr129/go-wallet/cmd/auth-service/db/sqlc"
 	"github.com/whr129/go-wallet/cmd/auth-service/dto"
 	token "github.com/whr129/go-wallet/pkg/token"
@@ -86,6 +90,19 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		return
 	}
 
+	// Check if the user is in redis
+	userCheckMsg := fmt.Sprintf("user:%d", user.ID)
+	_, err = server.redisClient.Get(ctx, userCheckMsg).Result()
+
+	if err != nil && err != redis.Nil {
+		// User is already logged in, return an error
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	} else if err == nil {
+		ctx.JSON(http.StatusForbidden, gin.H{"error": "User Already Logged In"})
+		return
+	}
+
 	accessToken, accessPayload, err := server.tokenMaker.CreateToken(
 		user.ID,
 		user.UserName,
@@ -135,15 +152,41 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		return
 	}
 
+	// Store the session in Redis
+	userMsg := fmt.Sprintf("user:%d", user.ID)
+	authSession := dto.AuthSessionDetails{
+		UserID:    user.ID,
+		Email:     user.Email,
+		SessionID: session.ID,
+		Role:      user.Role,
+		ExpiredAt: time.Now().Add(24 * time.Hour),
+	}
+
+	var authSessionDetails []byte
+	authSessionDetails, err = json.Marshal(authSession)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	err = server.redisClient.Set(ctx, userMsg, authSessionDetails, server.config.RefreshTokenDuration).Err()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
 	// Store the refresh token in Redis
-	server.redisClient.Set(ctx, refreshToken, session.ID, server.config.RefreshTokenDuration).Err()
+	refreshMsg := fmt.Sprintf("refresh:%s", refreshToken)
+	err = server.redisClient.Set(ctx, refreshMsg, authSessionDetails, server.config.RefreshTokenDuration).Err()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
 	// Store the access token in Redis
-	err = server.redisClient.Set(ctx, accessToken, session.ID, server.config.AccessTokenDuration).Err()
+	accessMsg := fmt.Sprintf("access:%s", accessToken)
+	err = server.redisClient.Set(ctx, accessMsg, authSessionDetails, server.config.AccessTokenDuration).Err()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
