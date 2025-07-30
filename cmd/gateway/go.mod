@@ -1,11 +1,11 @@
-module github.com/whr129/go-wallet
+module github.com/whr129/go-wallet/cmd/gateway
 
 go 1.24.3
 
 require (
 	github.com/gin-gonic/gin v1.10.1
 	github.com/redis/go-redis/v9 v9.11.0
-	github.com/whr129/go-wallet/cmd/auth-service v0.0.0-20250729005709-512d9358df78
+	github.com/whr129/go-wallet/cmd/auth-service v0.0.0-20250730021828-c49a49679da2
 	github.com/whr129/go-wallet/pkg v0.0.0-20250729005709-512d9358df78
 )
 

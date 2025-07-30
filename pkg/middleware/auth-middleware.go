@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	rds "github.com/whr129/go-wallet/cmd/auth-service/db"
 	"github.com/whr129/go-wallet/pkg/token"
 )
 
@@ -21,7 +22,7 @@ func errorResponse(err error) gin.H {
 }
 
 // AuthMiddleware creates a gin middleware for authorization
-func AuthMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
+func AuthMiddleware(tokenMaker token.Maker, redisClient rds.RedisClient) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		authorizationHeader := ctx.GetHeader(authorizationHeaderKey)
 

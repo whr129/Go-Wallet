@@ -20,7 +20,7 @@ type Config struct {
 	AuthURL              string        `mapstructure:"AUTH_SERVICE_URL"`
 	WalletURL            string        `mapstructure:"WALLET_SERVICE_URL"`
 	TransactionURL       string        `mapstructure:"TRANSACTION_SERVICE_URL"`
-	NotificationURL      string        `mapstructure:"NOTIFICATION_SERVICE_URL"`
+	// NotificationURL      string        `mapstructure:"NOTIFICATION_SERVICE_URL"`
 }
 
 // LoadConfig reads configuration from file or environment variables.

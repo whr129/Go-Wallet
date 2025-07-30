@@ -45,8 +45,8 @@ func NewServer(config util.Config, store db.Store, redisClient *redis.Client) (*
 func (server *Server) setupRouter() {
 	router := gin.Default()
 
-	router.POST("/users", server.createUser)
-	router.POST("/users/login", server.loginUser)
+	router.POST("/create", server.createUser)
+	router.POST("/login", server.loginUser)
 	// router.POST("/tokens/renew_access", server.renewAccessToken)
 
 	server.Router = router
