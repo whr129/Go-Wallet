@@ -111,10 +111,10 @@ github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS
 github.com/twitchyliquid64/golang-asm v0.15.1/go.mod h1:a1lVb/DtPvCB8fslRZhAngC2+aY1QWCk3Cedj/Gdt08=
 github.com/ugorji/go/codec v1.2.12 h1:9LC83zGrHhuUA9l16C9AHXAqEV/2wBQ4nkvumAE65EE=
 github.com/ugorji/go/codec v1.2.12/go.mod h1:UNopzCgEMSXjBc6AOMqYvWC1ktqTAfzJZUZgYf6w6lg=
-github.com/whr129/go-wallet/cmd/auth-service v0.0.0-20250730021828-c49a49679da2 h1:uoihVhhGxB6yzamoQodEYiq+9naBpmKQYWRpirnh0NI=
-github.com/whr129/go-wallet/cmd/auth-service v0.0.0-20250730021828-c49a49679da2/go.mod h1:OaDg2qGEZiNUcuEgUeIoo1ncAXDIxXl+G09YwH4V3Cs=
-github.com/whr129/go-wallet/pkg v0.0.0-20250729005709-512d9358df78 h1:5Gj7uKhUIBEc1YbpSklDqGzlRxMeGNkBoIscjkq6hAs=
-github.com/whr129/go-wallet/pkg v0.0.0-20250729005709-512d9358df78/go.mod h1:km2xIH9XagHc8rXYX9ej1kfV+F0I5yEB8QQR/HQr5Ic=
+github.com/whr129/go-wallet/cmd/auth-service v0.0.0-20250730022705-5d84b2ec283b h1:T9twKq8twu0VbgXaBlhfu/Sc9nIsUXCZ8GdPJcdW4N4=
+github.com/whr129/go-wallet/cmd/auth-service v0.0.0-20250730022705-5d84b2ec283b/go.mod h1:OaDg2qGEZiNUcuEgUeIoo1ncAXDIxXl+G09YwH4V3Cs=
+github.com/whr129/go-wallet/pkg v0.0.0-20250730022705-5d84b2ec283b h1:3SI2WNor6TE/Fu02Dd5YDnw1Xrw/9CJvyEYBNPzk/K8=
+github.com/whr129/go-wallet/pkg v0.0.0-20250730022705-5d84b2ec283b/go.mod h1:BFSfzxmMD5crc6yv73Eg00c5MYmQodRIMYOLGGvi2KU=
 go.uber.org/atomic v1.9.0 h1:ECmE8Bn/WFTYwEW/bpKD3M8VtR/zQVbavAoalC1PYyE=
 go.uber.org/atomic v1.9.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
 go.uber.org/multierr v1.9.0 h1:7fIwc/ZtS0q++VgcfqFDxSBZVv/Xo49/SYnDFupUwlI=

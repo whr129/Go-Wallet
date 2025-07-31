@@ -1,20 +1,23 @@
 package middleware
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	rds "github.com/whr129/go-wallet/cmd/auth-service/db"
+	"github.com/redis/go-redis/v9"
 	"github.com/whr129/go-wallet/pkg/token"
 )
 
 const (
 	authorizationHeaderKey  = "authorization"
 	authorizationTypeBearer = "bearer"
-	authorizationPayloadKey = "authorization_payload"
+	X_USER_ID               = "X-User-ID"
+	X_EMAIL                 = "X-Email"
+	X_ROLE                  = "X-Role"
 )
 
 func errorResponse(err error) gin.H {
@@ -22,7 +25,7 @@ func errorResponse(err error) gin.H {
 }
 
 // AuthMiddleware creates a gin middleware for authorization
-func AuthMiddleware(tokenMaker token.Maker, redisClient rds.RedisClient) gin.HandlerFunc {
+func AuthMiddleware(tokenMaker token.Maker, redisClient redis.Client) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		authorizationHeader := ctx.GetHeader(authorizationHeaderKey)
 
@@ -47,13 +50,31 @@ func AuthMiddleware(tokenMaker token.Maker, redisClient rds.RedisClient) gin.Han
 		}
 
 		accessToken := fields[1]
-		payload, err := tokenMaker.VerifyToken(accessToken, token.TokenTypeAccessToken)
+		authSessionDetails, err := redisClient.Get(ctx, accessToken).Result()
+
+		if err == redis.Nil {
+			err = fmt.Errorf("access token %s not found", accessToken)
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, errorResponse(err))
+			return
+		} else if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, errorResponse(err))
+			return
+		}
+
+		userInfo := []byte(authSessionDetails)
+
+		var payload AuthSessionDetails
+
+		err = json.Unmarshal(userInfo, &payload)
+
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, errorResponse(err))
 			return
 		}
 
-		ctx.Set(authorizationPayloadKey, payload)
+		ctx.Set(X_USER_ID, payload.UserID)
+		ctx.Set(X_EMAIL, payload.Email)
+		ctx.Set(X_ROLE, payload.Role)
 		ctx.Next()
 	}
 }

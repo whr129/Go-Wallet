@@ -22,7 +22,7 @@ type Server struct {
 }
 
 // NewServer creates a new HTTP server and set up routing.
-func NewServer(config utilLocal.Config, store db.Store, redisClient *redis.Client) (*Server, error) {
+func NewServer(config utilLocal.Config, redisClient *redis.Client) (*Server, error) {
 	tokenMaker, err := token.NewJWTMaker(config.TokenSymmetricKey)
 	if err != nil {
 		return nil, fmt.Errorf("cannot create token maker: %w", err)
@@ -30,7 +30,6 @@ func NewServer(config utilLocal.Config, store db.Store, redisClient *redis.Clien
 
 	server := &Server{
 		config:      config,
-		store:       store,
 		redisClient: redisClient,
 		tokenMaker:  tokenMaker,
 	}

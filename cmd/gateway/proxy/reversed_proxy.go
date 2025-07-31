@@ -13,6 +13,7 @@ import (
 const (
 	X_USER_ID = "X-User-ID"
 	X_EMAIL   = "X-Email"
+	X_ROLE    = "X-Role"
 )
 
 func NewReverseProxy(target string) gin.HandlerFunc {
@@ -38,11 +39,14 @@ func NewReverseProxy(target string) gin.HandlerFunc {
 			req.URL.Path = ctx.Param("path")
 			req.Header = ctx.Request.Header
 
-			if userID := util.GetXUserID(ctx); userID != 0 {
+			if userID, err := util.GetXUserID(ctx); userID != 0 && err {
 				req.Header.Set(X_USER_ID, fmt.Sprintf("%d", userID))
 			}
-			if email := util.GetXEmail(ctx); email != "" {
+			if email, err := util.GetXEmail(ctx); email != "" && !err {
 				req.Header.Set(X_EMAIL, email)
+			}
+			if role, err := util.GetXRole(ctx); role != "" && !err {
+				req.Header.Set(X_ROLE, role)
 			}
 
 		}

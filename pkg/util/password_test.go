@@ -7,7 +7,7 @@ import (
 )
 
 func TestGenerateID(t *testing.T) {
-	id, err := GenerateID()
+	id, _ := GenerateID()
 	t.Logf("Generated ID: %d", id)
 	id_2, err := GenerateID()
 	t.Logf("Generated ID: %d", id_2)

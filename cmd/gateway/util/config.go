@@ -17,6 +17,9 @@ type Config struct {
 	TokenSymmetricKey    string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
 	AccessTokenDuration  time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
 	RefreshTokenDuration time.Duration `mapstructure:"REFRESH_TOKEN_DURATION"`
+	RedisAddress         string        `mapstructure:"REDIS_ADDRESS"`
+	RedisPassword        string        `mapstructure:"REDIS_PASSWORD"`
+	RedisDB              int           `mapstructure:"REDIS_DB"`
 	AuthURL              string        `mapstructure:"AUTH_SERVICE_URL"`
 	WalletURL            string        `mapstructure:"WALLET_SERVICE_URL"`
 	TransactionURL       string        `mapstructure:"TRANSACTION_SERVICE_URL"`

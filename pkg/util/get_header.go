@@ -9,6 +9,7 @@ import (
 const (
 	X_USER_ID = "X-User-ID"
 	X_EMAIL   = "X-Email"
+	X_ROLE    = "X-Role"
 )
 
 func GetXUserID(ctx *gin.Context) (int64, bool) {
@@ -30,4 +31,14 @@ func GetXEmail(ctx *gin.Context) (string, bool) {
 	}
 
 	return xEmail, true
+}
+
+func GetXRole(ctx *gin.Context) (string, bool) {
+	xROLE := ctx.GetHeader(X_ROLE)
+
+	if xROLE == "" {
+		return "", false
+	}
+
+	return xROLE, true
 }
