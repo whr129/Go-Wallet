@@ -5,7 +5,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
-	db "github.com/whr129/go-wallet/cmd/auth-service/db/sqlc"
 	proxy "github.com/whr129/go-wallet/cmd/gateway/proxy"
 	utilLocal "github.com/whr129/go-wallet/cmd/gateway/util"
 	"github.com/whr129/go-wallet/pkg/middleware"
@@ -15,7 +14,6 @@ import (
 // Server serves HTTP requests for our banking service.
 type Server struct {
 	config      utilLocal.Config
-	store       db.Store
 	tokenMaker  token.Maker
 	redisClient *redis.Client
 	Router      *gin.Engine

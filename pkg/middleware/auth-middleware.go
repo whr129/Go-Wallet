@@ -25,7 +25,7 @@ func errorResponse(err error) gin.H {
 }
 
 // AuthMiddleware creates a gin middleware for authorization
-func AuthMiddleware(tokenMaker token.Maker, redisClient redis.Client) gin.HandlerFunc {
+func AuthMiddleware(tokenMaker token.Maker, redisClient *redis.Client) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		authorizationHeader := ctx.GetHeader(authorizationHeaderKey)
 
