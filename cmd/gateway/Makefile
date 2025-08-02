@@ -37,7 +37,7 @@ dockerbuild:
 	docker build -t gateway:latest .
 
 dockerrun:
-	docker run --name gateway-service --network go-wallet-network -p 8081:8080 -d gateway:latest
+	docker run --name gateway --network go-wallet-network -p 8081:8080 -d gateway:latest
 
 redis:
 	docker run --name redis --network go-wallet-network -p 6379:6379 -d redis:latest

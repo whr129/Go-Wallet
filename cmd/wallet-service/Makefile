@@ -33,4 +33,10 @@ sqlc:
 server:
 	go run server/main.go
 
-.PHONY: network postgres migrateup createdb dropdb migratedown migrateup1 migratedown1 new_migration sqlc server
+dockerbuild:
+	docker build -t wallet-service:latest .
+
+dockerrun:
+	docker run --name wallet-service --network go-wallet-network -p 8082:8080 -d wallet-service:latest
+
+.PHONY: network postgres migrateup createdb dropdb migratedown migrateup1 migratedown1 new_migration sqlc server dockerbuild dockerrun	

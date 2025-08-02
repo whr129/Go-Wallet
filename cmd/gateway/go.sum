@@ -155,8 +155,10 @@ github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS
 github.com/twitchyliquid64/golang-asm v0.15.1/go.mod h1:a1lVb/DtPvCB8fslRZhAngC2+aY1QWCk3Cedj/Gdt08=
 github.com/ugorji/go/codec v1.2.12 h1:9LC83zGrHhuUA9l16C9AHXAqEV/2wBQ4nkvumAE65EE=
 github.com/ugorji/go/codec v1.2.12/go.mod h1:UNopzCgEMSXjBc6AOMqYvWC1ktqTAfzJZUZgYf6w6lg=
-github.com/whr129/go-wallet/pkg v0.0.0-20250731045513-63fa9e0f6278 h1:URTg78J4pd8HKikkqfe+nZSo3YHLqp8sfaNFIt2DMCs=
-github.com/whr129/go-wallet/pkg v0.0.0-20250731045513-63fa9e0f6278/go.mod h1:BFSfzxmMD5crc6yv73Eg00c5MYmQodRIMYOLGGvi2KU=
+github.com/whr129/go-wallet/pkg v0.0.0-20250801001257-ecea27d4ee4f h1:+lrSZrs8HfLgKxYF965o0N96Qk25zTKA8KPzrdjgF30=
+github.com/whr129/go-wallet/pkg v0.0.0-20250801001257-ecea27d4ee4f/go.mod h1:/JgcTDKB1MGxCzg5iQUJ7pzJLRcbz7Lx5/wXJY6WceE=
+github.com/whr129/go-wallet/pkg v0.1.1 h1:5W/6eo4VFndfLVDdsHLGX+f8Vgn4UL7nRyFAgeqvsiA=
+github.com/whr129/go-wallet/pkg v0.1.1/go.mod h1:/JgcTDKB1MGxCzg5iQUJ7pzJLRcbz7Lx5/wXJY6WceE=
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.54.0 h1:TT4fX+nBOA/+LUkobKGW1ydGcn+G3vRw9+g5HwCphpk=
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.54.0/go.mod h1:L7UH0GbB0p47T4Rri3uHjbpCFYrVrwc1I25QhNPiGK8=
 go.opentelemetry.io/otel v1.29.0 h1:PdomN/Al4q/lN6iBJEN3AwPvUiHPMlt93c8bqTG5Llw=

@@ -50,7 +50,9 @@ func AuthMiddleware(tokenMaker token.Maker, redisClient *redis.Client) gin.Handl
 		}
 
 		accessToken := fields[1]
-		authSessionDetails, err := redisClient.Get(ctx, accessToken).Result()
+		accessTokenMsg := fmt.Sprintf("access:%s", accessToken)
+
+		authSessionDetails, err := redisClient.Get(ctx, accessTokenMsg).Result()
 
 		if err == redis.Nil {
 			err = fmt.Errorf("access token %s not found", accessToken)

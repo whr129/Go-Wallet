@@ -1,34 +1,15 @@
 package dto
 
-import (
-	"time"
-
-	"github.com/google/uuid"
-)
-
 type CreateAccountRequest struct {
 	UserID   int64  `json:"user_id" binding:"required"`
 	Currency string `json:"currency" binding:"required,currency"`
 }
 
-type UserResponse struct {
-	ID                int64     `json:"id"`
-	UserName          string    `json:"username"`
-	Email             string    `json:"email"`
-	PasswordChangedAt time.Time `json:"password_changed_at"`
-	CreatedAt         time.Time `json:"created_at"`
+type GetAccountRequest struct {
+	ID int64 `uri:"id" binding:"required,min=1"`
 }
 
-type LoginUserRequest struct {
-	UserName string `json:"username" binding:"required,alphanum"`
-	Password string `json:"password" binding:"required,min=6"`
-}
-
-type LoginUserResponse struct {
-	SessionID             uuid.UUID    `json:"session_id"`
-	AccessToken           string       `json:"access_token"`
-	AccessTokenExpiresAt  time.Time    `json:"access_token_expires_at"`
-	RefreshToken          string       `json:"refresh_token"`
-	RefreshTokenExpiresAt time.Time    `json:"refresh_token_expires_at"`
-	User                  UserResponse `json:"user"`
+type ListAccountRequest struct {
+	PageID   int32 `form:"page_id" binding:"required,min=1"`
+	PageSize int32 `form:"page_size" binding:"required,min=5,max=10"`
 }

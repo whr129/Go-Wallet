@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	db "github.com/whr129/go-wallet/cmd/wallet-service/db/sqlc"
-	"github.com/whr129/go-wallet/cmd/wallet-service/util"
+	"github.com/whr129/go-wallet/pkg/util"
 )
 
 // Server serves HTTP requests for our banking service.
@@ -32,8 +32,8 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 func (server *Server) setupRouter() {
 	router := gin.Default()
 
-	router.POST("/accounts", server.createAccount)
-	router.GET("/accounts/:id", server.getAccount)
+	router.POST("/create", server.createAccount)
+	router.GET("/:id", server.getAccount)
 	router.GET("/accounts", server.listAccounts)
 
 	server.Router = router

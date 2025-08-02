@@ -7,8 +7,6 @@ package db
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const addAccountBalance = `-- name: AddAccountBalance :one
@@ -49,10 +47,10 @@ INSERT INTO accounts (
 `
 
 type CreateAccountParams struct {
-	ID       int64       `json:"id"`
-	UserID   pgtype.Int8 `json:"user_id"`
-	Balance  int64       `json:"balance"`
-	Currency string      `json:"currency"`
+	ID       int64  `json:"id"`
+	UserID   int64  `json:"user_id"`
+	Balance  int64  `json:"balance"`
+	Currency string `json:"currency"`
 }
 
 func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error) {
@@ -132,9 +130,9 @@ OFFSET $3
 `
 
 type ListAccountsParams struct {
-	UserID pgtype.Int8 `json:"user_id"`
-	Limit  int32       `json:"limit"`
-	Offset int32       `json:"offset"`
+	UserID int64 `json:"user_id"`
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
 }
 
 func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]Account, error) {

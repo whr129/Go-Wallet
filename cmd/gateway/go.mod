@@ -8,7 +8,7 @@ require (
 	github.com/redis/go-redis/v9 v9.11.0
 	github.com/rs/zerolog v1.34.0
 	github.com/spf13/viper v1.20.1
-	github.com/whr129/go-wallet/pkg v0.0.0-20250731045513-63fa9e0f6278
+	github.com/whr129/go-wallet/pkg v0.1.1
 	golang.org/x/sync v0.16.0
 )
 
