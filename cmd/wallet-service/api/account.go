@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,13 +18,26 @@ func (server *Server) createAccount(ctx *gin.Context) {
 		return
 	}
 
-	userID, exists := util.GetXUserID(ctx)
-	if !exists || userID <= 0 {
+	authUserID := ctx.MustGet(util.X_USER_ID)
+	userID, ok := authUserID.(int64)
+	log.Printf("Creating account for user ID: %d", userID)
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, errorResponse(errors.New("invalid user ID type")))
+		return
+	}
+	if userID <= 0 {
 		ctx.JSON(http.StatusBadRequest, errorResponse(errors.New("invalid user ID")))
 		return
 	}
 
+	id, err := util.GenerateID()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(errors.New("failed to generate account ID)")))
+		return
+	}
+
 	arg := db.CreateAccountParams{
+		ID:       id,
 		UserID:   userID,
 		Currency: req.Currency,
 		Balance:  0,
@@ -39,7 +53,7 @@ func (server *Server) createAccount(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-
+	log.Printf("Account created successfully: %+v", account)
 	ctx.JSON(http.StatusOK, account)
 }
 
@@ -73,7 +87,7 @@ func (server *Server) getAccount(ctx *gin.Context) {
 
 func (server *Server) listAccounts(ctx *gin.Context) {
 	var req dto.ListAccountRequest
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}

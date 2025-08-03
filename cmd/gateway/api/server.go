@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
@@ -9,6 +10,7 @@ import (
 	utilLocal "github.com/whr129/go-wallet/cmd/gateway/util"
 	"github.com/whr129/go-wallet/pkg/middleware"
 	token "github.com/whr129/go-wallet/pkg/token"
+	"github.com/whr129/go-wallet/pkg/util"
 )
 
 // Server serves HTTP requests for our banking service.
@@ -50,6 +52,16 @@ func (server *Server) setupRouter() {
 	router.Any("/auth/*path", authProxy)
 
 	protected := router.Group("/").Use(middleware.AuthMiddleware(server.tokenMaker, server.redisClient))
+	protected.Use(func(ctx *gin.Context) {
+		userID, _ := ctx.Get("X-User-ID")
+		email, _ := ctx.Get(util.X_EMAIL)
+		role, _ := ctx.Get(util.X_ROLE)
+
+		log.Printf("Incoming request - user_id=%v, email=%v, role=%v", userID, email, role)
+
+		ctx.Next() // important to continue to the next handler
+	})
+
 	{
 		protected.Any("/wallet/*path", walletProxy)
 	}

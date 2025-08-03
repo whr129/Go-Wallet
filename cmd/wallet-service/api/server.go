@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	db "github.com/whr129/go-wallet/cmd/wallet-service/db/sqlc"
+	"github.com/whr129/go-wallet/cmd/wallet-service/middleware"
 	"github.com/whr129/go-wallet/pkg/util"
 )
 
@@ -31,6 +32,8 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 
 func (server *Server) setupRouter() {
 	router := gin.Default()
+
+	router.Use(middleware.AuthMiddleware)
 
 	router.POST("/create", server.createAccount)
 	router.GET("/:id", server.getAccount)

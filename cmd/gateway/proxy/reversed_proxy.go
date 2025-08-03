@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -39,14 +40,18 @@ func NewReverseProxy(target string) gin.HandlerFunc {
 			req.URL.Path = ctx.Param("path")
 			req.Header = ctx.Request.Header
 
-			if userID, err := util.GetXUserID(ctx); userID != 0 && err {
+			if userID, err := ctx.Get(util.X_USER_ID); userID != 0 && err {
 				req.Header.Set(X_USER_ID, fmt.Sprintf("%d", userID))
+				log.Printf("userID: %v", userID)
+
 			}
-			if email, err := util.GetXEmail(ctx); email != "" && !err {
-				req.Header.Set(X_EMAIL, email)
+			if email, err := ctx.Get(util.X_EMAIL); email != "" && err {
+				req.Header.Set(X_EMAIL, fmt.Sprint(email))
+				log.Printf("email: %s", email)
 			}
-			if role, err := util.GetXRole(ctx); role != "" && !err {
-				req.Header.Set(X_ROLE, role)
+			if role, err := ctx.Get(util.X_ROLE); role != "" && err {
+				req.Header.Set(X_ROLE, fmt.Sprint(role))
+				log.Printf("role: %s", role)
 			}
 
 		}
