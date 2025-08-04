@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package pb;
+
+import "wallet_add_amount.proto";
+
+option go_package = "github.com/whr129/go-wallet/cmd/wallet-service/pb";
+
+// The greeting service definition.
+service WalletService {
+  // Sends a greeting
+  rpc AddAcountbalance (AddAccountBalanceRequest) returns (AddAccountBalanceResponse) {}
+}

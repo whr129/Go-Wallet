@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -16,8 +17,12 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/whr129/go-wallet/cmd/wallet-service/api"
 	db "github.com/whr129/go-wallet/cmd/wallet-service/db/sqlc"
+	"github.com/whr129/go-wallet/cmd/wallet-service/gapi"
+	"github.com/whr129/go-wallet/cmd/wallet-service/pb"
 	util "github.com/whr129/go-wallet/pkg/util"
 	"golang.org/x/sync/errgroup"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 var interruptSignals = []os.Signal{
@@ -48,6 +53,7 @@ func main() {
 
 	runDBMigration(config.MigrationURL, config.DBSource)
 	runGinServer(config, db.NewStore(connPool), waitGroup, ctx)
+	runGrpcServer(ctx, waitGroup, config, db.NewStore(connPool))
 
 	err = waitGroup.Wait()
 	if err != nil {
@@ -66,6 +72,52 @@ func runDBMigration(migrationURL string, dbSource string) {
 	}
 
 	log.Info().Msg("db migrated successfully")
+}
+
+func runGrpcServer(
+	ctx context.Context,
+	waitGroup *errgroup.Group,
+	config util.Config,
+	store db.Store,
+) {
+	server, err := gapi.NewServer(config, store)
+	if err != nil {
+		log.Fatal().Err(err).Msg("cannot create server")
+	}
+
+	grpcServer := grpc.NewServer()
+	pb.RegisterWalletServiceServer(grpcServer, server)
+	reflection.Register(grpcServer)
+
+	listener, err := net.Listen("tcp", config.GRPCServerAddress)
+	if err != nil {
+		log.Fatal().Err(err).Msg("cannot create listener")
+	}
+
+	waitGroup.Go(func() error {
+		log.Info().Msgf("start gRPC server at %s", listener.Addr().String())
+
+		err = grpcServer.Serve(listener)
+		if err != nil {
+			if errors.Is(err, grpc.ErrServerStopped) {
+				return nil
+			}
+			log.Error().Err(err).Msg("gRPC server failed to serve")
+			return err
+		}
+
+		return nil
+	})
+
+	waitGroup.Go(func() error {
+		<-ctx.Done()
+		log.Info().Msg("graceful shutdown gRPC server")
+
+		grpcServer.GracefulStop()
+		log.Info().Msg("gRPC server is stopped")
+
+		return nil
+	})
 }
 
 func runGinServer(

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pb;
+
+import "wallet.proto";
+
+option go_package = "github.com/whr129/go-wallet/cmd/wallet-service/pb";
+
+// The request message containing the user's name.
+message AddAccountBalanceRequest {
+  int64 amount = 1;
+  int64 account_id = 2;
+}
+
+// The response message containing the greetings
+message AddAccountBalanceResponse {
+    Account account = 1; // The updated account after adding balance
+}

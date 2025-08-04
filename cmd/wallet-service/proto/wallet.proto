@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/whr129/go-wallet/cmd/wallet-service/pb";
+import "google/protobuf/timestamp.proto";
+
+
+message Account {
+  int64 id = 1;
+  int64 user_id = 2;
+  int64 balance_minor = 3;              // e.g., 1099 means $10.99 if currency has 2 decimals
+  string currency = 4;                  // or use an enum
+  google.protobuf.Timestamp created_at = 5;
+  bool is_deleted = 6;
+}
