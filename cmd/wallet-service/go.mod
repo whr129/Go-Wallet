@@ -7,7 +7,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/jackc/pgx/v5 v5.7.5
 	github.com/rs/zerolog v1.34.0
-	github.com/whr129/go-wallet/pkg v0.1.3
+	github.com/whr129/go-wallet/pkg v0.1.4
 	golang.org/x/sync v0.16.0
 	google.golang.org/grpc v1.67.3
 	google.golang.org/protobuf v1.36.1

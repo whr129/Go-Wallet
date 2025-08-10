@@ -26,8 +26,8 @@ type Account struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	UserId        int64                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	BalanceMinor  int64                  `protobuf:"varint,3,opt,name=balance_minor,json=balanceMinor,proto3" json:"balance_minor,omitempty"` // e.g., 1099 means $10.99 if currency has 2 decimals
-	Currency      string                 `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency,omitempty"`                              // or use an enum
+	Balance       int64                  `protobuf:"varint,3,opt,name=balance,proto3" json:"balance,omitempty"`
+	Currency      string                 `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency,omitempty"` // or use an enum
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	IsDeleted     bool                   `protobuf:"varint,6,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -78,9 +78,9 @@ func (x *Account) GetUserId() int64 {
 	return 0
 }
 
-func (x *Account) GetBalanceMinor() int64 {
+func (x *Account) GetBalance() int64 {
 	if x != nil {
-		return x.BalanceMinor
+		return x.Balance
 	}
 	return 0
 }
@@ -110,11 +110,11 @@ var File_wallet_proto protoreflect.FileDescriptor
 
 const file_wallet_proto_rawDesc = "" +
 	"\n" +
-	"\fwallet.proto\x12\x02pb\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcd\x01\n" +
+	"\fwallet.proto\x12\x02pb\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc2\x01\n" +
 	"\aAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\x03R\x06userId\x12#\n" +
-	"\rbalance_minor\x18\x03 \x01(\x03R\fbalanceMinor\x12\x1a\n" +
+	"\auser_id\x18\x02 \x01(\x03R\x06userId\x12\x18\n" +
+	"\abalance\x18\x03 \x01(\x03R\abalance\x12\x1a\n" +
 	"\bcurrency\x18\x04 \x01(\tR\bcurrency\x129\n" +
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1d\n" +

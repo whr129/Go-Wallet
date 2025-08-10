@@ -16,6 +16,6 @@ COPY --from=builder /app/wallet-service .
 COPY --from=builder /app/app.env .
 COPY --from=builder /app/db/migration ./db/migration
 
-EXPOSE 8080
+EXPOSE 8080 9090
 # Define entrypoint
 ENTRYPOINT ["./wallet-service"]
