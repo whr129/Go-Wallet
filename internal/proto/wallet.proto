@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pb;
 
-option go_package = "github.com/whr129/go-wallet/cmd/wallet-service/pb";
+option go_package = "github.com/whr129/go-wallet/internal/pb";
 import "google/protobuf/timestamp.proto";
 
 

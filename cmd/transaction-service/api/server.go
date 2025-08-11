@@ -2,8 +2,8 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	db "github.com/whr129/go-wallet/cmd/wallet-service/db/sqlc"
-	"github.com/whr129/go-wallet/cmd/wallet-service/middleware"
+	db "github.com/whr129/go-wallet/cmd/transaction-service/db/sqlc"
+	"github.com/whr129/go-wallet/cmd/transaction-service/middleware"
 	"github.com/whr129/go-wallet/pkg/util"
 )
 
@@ -35,9 +35,7 @@ func (server *Server) setupRouter() {
 
 	router.Use(middleware.AuthMiddleware)
 
-	router.POST("/create", server.createAccount)
-	router.GET("/:id", server.getAccount)
-	router.GET("/accounts", server.listAccounts)
+	router.POST("/transfers", server.createTransfer)
 
 	server.Router = router
 }

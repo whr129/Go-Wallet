@@ -14,8 +14,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/whr129/go-wallet/cmd/wallet-service/api"
-	db "github.com/whr129/go-wallet/cmd/wallet-service/db/sqlc"
+	"github.com/whr129/go-wallet/cmd/transaction-service/api"
+	db "github.com/whr129/go-wallet/cmd/transaction-service/db/sqlc"
 	util "github.com/whr129/go-wallet/pkg/util"
 	"golang.org/x/sync/errgroup"
 )

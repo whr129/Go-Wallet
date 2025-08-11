@@ -4,7 +4,7 @@ package pb;
 
 import "wallet.proto";
 
-option go_package = "github.com/whr129/go-wallet/cmd/wallet-service/pb";
+option go_package = "github.com/whr129/go-wallet/internal/pb";
 
 // The request message containing the user's name.
 message AddAccountBalanceRequest {

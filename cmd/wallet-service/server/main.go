@@ -18,7 +18,7 @@ import (
 	"github.com/whr129/go-wallet/cmd/wallet-service/api"
 	db "github.com/whr129/go-wallet/cmd/wallet-service/db/sqlc"
 	"github.com/whr129/go-wallet/cmd/wallet-service/gapi"
-	"github.com/whr129/go-wallet/cmd/wallet-service/pb"
+	"github.com/whr129/go-wallet/internal/pb"
 	util "github.com/whr129/go-wallet/pkg/util"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"

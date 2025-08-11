@@ -4,7 +4,7 @@ import (
 	"context"
 
 	db "github.com/whr129/go-wallet/cmd/wallet-service/db/sqlc"
-	"github.com/whr129/go-wallet/cmd/wallet-service/pb"
+	"github.com/whr129/go-wallet/internal/pb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
