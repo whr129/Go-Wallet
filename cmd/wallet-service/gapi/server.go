@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	db "github.com/whr129/go-wallet/cmd/wallet-service/db/sqlc"
-	"github.com/whr129/go-wallet/cmd/wallet-service/pb"
+	"github.com/whr129/go-wallet/internal/pb"
 	"github.com/whr129/go-wallet/pkg/token"
 	util "github.com/whr129/go-wallet/pkg/util"
 )
